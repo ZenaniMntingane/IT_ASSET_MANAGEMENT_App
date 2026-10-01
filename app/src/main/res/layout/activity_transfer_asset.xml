@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F7F8FC"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- ================= HEADER ================= -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="145dp"
+            android:orientation="vertical"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:paddingTop="35dp"
+            android:paddingBottom="20dp"
+            android:background="@drawable/bg_transfer_header">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:src="@android:drawable/ic_menu_revert"
+                    android:contentDescription="Back"
+                    app:tint="#FFFFFF" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="18dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Transfer IT Asset"
+                        android:textColor="#FFFFFF"
+                        android:textSize="27sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Move an asset to a new user, department or location"
+                        android:textColor="#E9E5FF"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <!-- ================= CONTENT ================= -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+
+            <!-- ================= ASSET INFORMATION ================= -->
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="2dp"
+                app:strokeColor="#E8E8F2"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Asset Information"
+                        android:textColor="#171A5C"
+                        android:textSize="19sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Enter the details of the asset you want to transfer."
+                        android:textColor="#7B84A8"
+                        android:textSize="13sp"
+                        android:layout_marginBottom="16dp" />
+
+
+                    <!-- Asset ID -->
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Asset ID"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:boxCornerRadiusTopStart="13dp"
+                        app:boxCornerRadiusTopEnd="13dp"
+                        app:boxCornerRadiusBottomStart="13dp"
+                        app:boxCornerRadiusBottomEnd="13dp"
+                        app:boxStrokeColor="#6650C8">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/assetIdInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <!-- Asset Name -->
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:hint="Asset Name"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:boxCornerRadiusTopStart="13dp"
+                        app:boxCornerRadiusTopEnd="13dp"
+                        app:boxCornerRadiusBottomStart="13dp"
+                        app:boxCornerRadiusBottomEnd="13dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/assetNameInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:focusableInTouchMode="true"
+                            android:focusable="true"
+                            android:enabled="true" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <!-- ================= OLD INFORMATION ================= -->
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="2dp"
+                app:strokeColor="#E8E8F2"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Old Information"
+                        android:textColor="#171A5C"
+                        android:textSize="19sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Details of the current holder."
+                        android:textColor="#7B84A8"
+                        android:textSize="13sp"
+                        android:layout_marginBottom="16dp" />
+
+
+                    <!-- Current User -->
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Current User"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:boxCornerRadiusTopStart="13dp"
+                        app:boxCornerRadiusTopEnd="13dp"
+                        app:boxCornerRadiusBottomStart="13dp"
+                        app:boxCornerRadiusBottomEnd="13dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/oldUserInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <!-- Current Department -->
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:hint="Current Department"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:boxCornerRadiusTopStart="13dp"
+                        app:boxCornerRadiusTopEnd="13dp"
+                        app:boxCornerRadiusBottomStart="13dp"
+                        app:boxCornerRadiusBottomEnd="13dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/oldDepartmentInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <!-- Current Location -->
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:hint="Current Location"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:boxCornerRadiusTopStart="13dp"
+                        app:boxCornerRadiusTopEnd="13dp"
+                        app:boxCornerRadiusBottomStart="13dp"
+                        app:boxCornerRadiusBottomEnd="13dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/oldLocationInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- OLD EMPLOYEE SIGNATURE -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="16dp"
+                        app:cardBackgroundColor="#FFFFFF"
+                        app:cardCornerRadius="18dp"
+                        app:cardElevation="2dp"
+                        app:strokeColor="#E4E5EF"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="20dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Current Employee Signature"
+                                android:textColor="#171A5C"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="The current employee must sign before the asset is transferred."
+                                android:textColor="#7B84A8"
+                                android:textSize="13sp" />
+
+                            <!-- ACTUAL SIGNATURE AREA -->
+                            <com.example.it_asset_management_app.SignatureView
+                                android:id="@+id/oldEmployeeSignature"
+                                android:layout_width="match_parent"
+                                android:layout_height="180dp"
+                                android:layout_marginTop="15dp"
+                                android:background="#FFFFFF" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnClearOldSignature"
+                                android:layout_width="wrap_content"
+                                android:layout_height="48dp"
+                                android:layout_gravity="end"
+                                android:layout_marginTop="10dp"
+                                android:text="Clear Signature"
+                                android:textAllCaps="false"
+                                android:textColor="#6547D9"
+                                app:backgroundTint="#F0EDFF"
+                                app:cornerRadius="24dp" />
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <!-- ================= NEW INFORMATION ================= -->
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="2dp"
+                app:strokeColor="#E8E8F2"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="New Information"
+                        android:textColor="#171A5C"
+                        android:textSize="19sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Details of the new holder."
+                        android:textColor="#7B84A8"
+                        android:textSize="13sp"
+                        android:layout_marginBottom="16dp" />
+
+
+                    <!-- New User -->
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="New User"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:boxCornerRadiusTopStart="13dp"
+                        app:boxCornerRadiusTopEnd="13dp"
+                        app:boxCornerRadiusBottomStart="13dp"
+                        app:boxCornerRadiusBottomEnd="13dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/newUserInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <!-- New Department -->
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:hint="New Department"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:boxCornerRadiusTopStart="13dp"
+                        app:boxCornerRadiusTopEnd="13dp"
+                        app:boxCornerRadiusBottomStart="13dp"
+                        app:boxCornerRadiusBottomEnd="13dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/newDepartmentInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <!-- New Location -->
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:hint="New Location"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:boxCornerRadiusTopStart="13dp"
+                        app:boxCornerRadiusTopEnd="13dp"
+                        app:boxCornerRadiusBottomStart="13dp"
+                        app:boxCornerRadiusBottomEnd="13dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/newLocationInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+            <!-- NEW EMPLOYEE SIGNATURE -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="2dp"
+                app:strokeColor="#E4E5EF"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="New Employee Signature"
+                        android:textColor="#171A5C"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="The new employee must sign to confirm receipt of the asset."
+                        android:textColor="#7B84A8"
+                        android:textSize="13sp" />
+
+                    <!-- ACTUAL SIGNATURE AREA -->
+                    <com.example.it_asset_management_app.SignatureView
+                        android:id="@+id/newEmployeeSignature"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:layout_marginTop="15dp"
+                        android:background="#FFFFFF" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnClearNewSignature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="10dp"
+                        android:text="Clear Signature"
+                        android:textAllCaps="false"
+                        android:textColor="#6547D9"
+                        app:backgroundTint="#F0EDFF"
+                        app:cornerRadius="24dp" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+            <!-- ================= TRANSFER BUTTON ================= -->
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/transferButton"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_marginBottom="30dp"
+                android:text="TRANSFER"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:backgroundTint="#6547D9"
+                app:cornerRadius="29dp"
+                app:elevation="4dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

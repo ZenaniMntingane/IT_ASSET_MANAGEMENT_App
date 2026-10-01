@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="loginButton" type="id" />
+    <item name="etDepartment" type="id" />
+    <item name="etAssignedUser" type="id" />
+    <item name="etPurchaseDate" type="id" />
+    <item name="btnSaveAsset" type="id" />
+</resources>

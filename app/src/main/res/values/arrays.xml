@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="asset_types">
+            <item>Laptop</item>
+            <item>Desktop</item>
+            <item>Monitor</item>
+            <item>Printer</item>
+            <item>Scanner</item>
+            <item>Projector</item>
+            <item>Server</item>
+            <item>Router</item>
+            <item>Switch</item>
+            <item>Mobile Phone</item>
+        </string-array>
+
+        <string-array name="asset_conditions">
+            <item>New</item>
+            <item>Good</item>
+            <item>Fair</item>
+            <item>Damaged</item>
+            <item>Under Repair</item>
+            <item>Retired</item>
+        </string-array>
+
+</resources>

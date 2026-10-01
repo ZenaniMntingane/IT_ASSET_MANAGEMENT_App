@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAF7FC"
+    android:fillViewport="true">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingStart="28dp"
+        android:paddingEnd="28dp"
+        android:paddingTop="35dp"
+        android:paddingBottom="30dp">
+
+        <!--  Registration Title -->
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registration"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#5A44D1"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="22dp" />
+
+        <!-- User Icon -->
+        <ImageView
+            android:id="@+id/imgUser"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/outline_account_circle_24"
+            android:contentDescription="User profile icon"
+            android:scaleType="fitCenter"
+            android:layout_marginBottom="20dp"
+            app:tint="#5A44D1" />
+
+        <!-- Registration Date -->
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/ic_calendar"
+            android:contentDescription="Calendar"
+            app:tint="#5A44D1" />
+        <TextView
+            android:id="@+id/txtDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="8dp"
+            android:textColor="#77727D"
+            android:gravity="center"
+            android:textSize="13sp"
+           />
+        <!-- FULL NAME LABEL -->
+        <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Full Name"
+        android:textColor="#332E3A"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="7dp" />
+
+        <EditText
+            android:id="@+id/registerNameInput"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@drawable/edit_text_background"
+            android:hint="Enter your full name"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:textColor="#332E3A"
+            android:textColorHint="#918B95"
+            android:textSize="15sp"
+            android:singleLine="true"
+            android:layout_marginBottom="18dp"
+            android:inputType="textPersonName" />
+        <!-- DEPARTMENT LABEL -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Department"
+            android:textColor="#332E3A"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="7dp" />
+
+        <EditText
+            android:id="@+id/registerDepartmentInput"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/edit_text_background"
+            android:hint="@string/department1"
+            android:inputType="textPersonName"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:textColor="#332E3A"
+            android:textColorHint="#918B95"
+            android:textSize="15sp"
+            android:singleLine="true"
+            android:layout_marginBottom="18dp"
+            />
+        <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:textColor="#332E3A"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="7dp" />
+
+        <EditText
+            android:id="@+id/registerEmailInput"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="@string/email2"
+            android:background="@drawable/edit_text_background"
+            android:inputType="textEmailAddress"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:textColor="#332E3A"
+            android:textColorHint="#918B95"
+            android:textSize="15sp"
+            android:singleLine="true"
+            android:layout_marginBottom="18dp" />
+        <!-- PASSWORD LABEL -->
+        <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:textColor="#332E3A"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="7dp" />
+        <EditText
+            android:id="@+id/registerPasswordInput"
+            android:background="@drawable/edit_text_background"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="Create a Password"
+            android:inputType="textPassword"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:textColor="#332E3A"
+            android:textColorHint="#918B95"
+            android:textSize="15sp"
+            android:singleLine="true"
+            android:layout_marginBottom="25dp"/>
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/register" />
+        <!-- ALREADY HAVE ACCOUNT -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Already have an account?"
+            android:textColor="#77727D"
+            android:textSize="14sp"/>
+        <!-- ALREADY HAVE ACCOUNT -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:id="@+id/tvLogin"
+            android:text="@string/Login"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="4dp"
+            android:textColor="#5A44D1"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="7dp" />
+
+    </LinearLayout>
+
+</ScrollView>
+
+
