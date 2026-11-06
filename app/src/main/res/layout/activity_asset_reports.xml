@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F7FA">
+    android:background="#F7F8FC"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,253 +12,422 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <!-- Page Title -->
+        <!-- HEADER -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/asset_reports"
+            android:text="IT Asset Reports"
+            android:textColor="#172B4D"
             android:textSize="28sp"
             android:textStyle="bold"
-            android:textColor="#1565C0"
-            android:gravity="center"
-            android:layout_marginBottom="8dp" />
+            android:gravity="center_vertical"
+            android:paddingTop="12dp"
+            android:paddingBottom="8dp" />
 
-        <!-- Description -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/generate_reports_from_your_it_asset_records"
-            android:textSize="15sp"
-            android:textColor="#666666"
-            android:gravity="center"
-            android:layout_marginBottom="25dp" />
+            android:text="Generate, review and export reports."
+            android:textColor="#687386"
+            android:textSize="14sp"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginBottom="24dp" />
 
-
-        <!-- ============================= -->
         <!-- ALL ASSETS REPORT -->
-        <!-- ============================= -->
-
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:id="@+id/reportAllAssets"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="#FFFFFF"
-            android:padding="18dp"
-            android:layout_marginBottom="15dp"
-            android:elevation="4dp"
+            android:layout_marginBottom="14dp"
             android:clickable="true"
-            android:focusable="true">
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="3dp">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/all_assets_report"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#1565C0" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="18dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/view_and_export_all_assets_stored_in_firebase"
-                android:textSize="14sp"
-                android:textColor="#777777"
-                android:layout_marginTop="5dp" />
+                <TextView
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:background="#E3F2FD"
+                    android:gravity="center"
+                    android:text="📋"
+                    android:textSize="25sp" />
 
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="All Assets Report"
+                        android:textColor="#172B4D"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
 
-        <!-- ============================= -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="View all registered assets and their details."
+                        android:textColor="#687386"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="Open all assets report"
+                    app:srcCompat="@drawable/ic_forward_arrow"
+                    app:tint="#168BE8" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
         <!-- STATUS REPORT -->
-        <!-- ============================= -->
-
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:id="@+id/reportStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="#FFFFFF"
-            android:padding="18dp"
-            android:layout_marginBottom="15dp"
-            android:elevation="4dp"
+            android:layout_marginBottom="14dp"
             android:clickable="true"
-            android:focusable="true">
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="3dp">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/asset_status_report"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#1565C0" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="18dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/view_assets_according_to_their_condition_or_status"
-                android:textSize="14sp"
-                android:textColor="#777777"
-                android:layout_marginTop="5dp" />
+                <TextView
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:background="#FFF3E0"
+                    android:gravity="center"
+                    android:text="📊"
+                    android:textSize="25sp" />
 
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Asset Status Report"
+                        android:textColor="#172B4D"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
 
-        <!-- ============================= -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Review the current condition of each asset."
+                        android:textColor="#687386"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="Open status report"
+                    app:srcCompat="@drawable/ic_forward_arrow"
+                    app:tint="#168BE8" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
         <!-- CATEGORY REPORT -->
-        <!-- ============================= -->
-
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:id="@+id/reportCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="#FFFFFF"
-            android:padding="18dp"
-            android:layout_marginBottom="15dp"
-            android:elevation="4dp"
+            android:layout_marginBottom="14dp"
             android:clickable="true"
-            android:focusable="true">
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="3dp">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/asset_category_report"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#1565C0" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="18dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/view_assets_by_type_such_as_laptops_printers_and_desktops"
-                android:textSize="14sp"
-                android:textColor="#777777"
-                android:layout_marginTop="5dp" />
+                <TextView
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:background="#E8F5E9"
+                    android:gravity="center"
+                    android:text="🗂️"
+                    android:textSize="25sp" />
 
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Category Report"
+                        android:textColor="#172B4D"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
 
-        <!-- ============================= -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Group assets by type or category."
+                        android:textColor="#687386"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="Open category report"
+                    app:srcCompat="@drawable/ic_forward_arrow"
+                    app:tint="#168BE8" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
         <!-- LOCATION REPORT -->
-        <!-- ============================= -->
-
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:id="@+id/reportLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="#FFFFFF"
-            android:padding="18dp"
-            android:layout_marginBottom="15dp"
-            android:elevation="4dp"
+            android:layout_marginBottom="14dp"
             android:clickable="true"
-            android:focusable="true">
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="3dp">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/asset_location_report"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#1565C0" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="18dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/view_where_assets_are_currently_located"
-                android:textSize="14sp"
-                android:textColor="#777777"
-                android:layout_marginTop="5dp" />
+                <TextView
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:background="#F3E5F5"
+                    android:gravity="center"
+                    android:text="📍"
+                    android:textSize="25sp" />
 
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Location Report"
+                        android:textColor="#172B4D"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
 
-        <!-- ============================= -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="See asset locations and departments."
+                        android:textColor="#687386"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="Open location report"
+                    app:srcCompat="@drawable/ic_forward_arrow"
+                    app:tint="#168BE8" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
         <!-- MAINTENANCE REPORT -->
-        <!-- ============================= -->
-
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:id="@+id/reportMaintenance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="#FFFFFF"
-            android:padding="18dp"
-            android:layout_marginBottom="15dp"
-            android:elevation="4dp"
+            android:layout_marginBottom="14dp"
             android:clickable="true"
-            android:focusable="true">
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="3dp">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/maintenance_report"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#1565C0" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="18dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/view_assets_that_require_maintenance_repair_or_replacement"
-                android:textSize="14sp"
-                android:textColor="#777777"
-                android:layout_marginTop="5dp" />
+                <TextView
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:background="#FFEBEE"
+                    android:gravity="center"
+                    android:text="🔧"
+                    android:textSize="25sp" />
 
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Maintenance Report"
+                        android:textColor="#172B4D"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
 
-        <!-- ============================= -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Review maintenance records, issues, priorities and status."
+                        android:textColor="#687386"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="Open maintenance report"
+                    app:srcCompat="@drawable/ic_forward_arrow"
+                    app:tint="#168BE8" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
         <!-- ALLOCATION REPORT -->
-        <!-- ============================= -->
-
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:id="@+id/reportAllocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="#FFFFFF"
-            android:padding="18dp"
-            android:layout_marginBottom="25dp"
-            android:elevation="4dp"
+            android:layout_marginBottom="24dp"
             android:clickable="true"
-            android:focusable="true">
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="3dp">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/asset_allocation_report"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#1565C0" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="18dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/view_assigned_users_departments_and_asset_locations"
-                android:textSize="14sp"
-                android:textColor="#777777"
-                android:layout_marginTop="5dp" />
+                <TextView
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:background="#E0F2F1"
+                    android:gravity="center"
+                    android:text="👥"
+                    android:textSize="25sp" />
 
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Allocation Report"
+                        android:textColor="#172B4D"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
 
-        <!-- ============================= -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="View assigned assets, users and departments."
+                        android:textColor="#687386"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="Open allocation report"
+                    app:srcCompat="@drawable/ic_forward_arrow"
+                    app:tint="#168BE8" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
         <!-- EXPORT BUTTON -->
-        <!-- ============================= -->
-
         <Button
             android:id="@+id/btnExportReport"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:text="@string/export_report"
-            android:textSize="17sp"
-            android:textStyle="bold"
+            android:layout_height="58dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#168BE8"
+            android:text="Export and Share Report"
+            android:textAllCaps="false"
             android:textColor="#FFFFFF"
-            android:backgroundTint="#1565C0"
-            android:layout_marginBottom="20dp" />
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:cornerRadius="12dp" />
+
+        <!-- FOOTER -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="16dp"
+            android:text="IT Asset Management System"
+            android:textColor="#8A94A6"
+            android:textSize="12sp" />
 
     </LinearLayout>
-
 </ScrollView>

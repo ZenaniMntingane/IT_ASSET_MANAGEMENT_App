@@ -6,6 +6,8 @@ import android.view.View
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.firebase.database.DataSnapshot
@@ -14,7 +16,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class Maintenance : AppCompatActivity() {
-
     private lateinit var database: FirebaseDatabase
 
     // Summary
@@ -41,10 +42,12 @@ class Maintenance : AppCompatActivity() {
     private lateinit var btnBack: View
 
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_maintanance)
+        setContentView(R.layout.activity_maintenance)
 
         database = FirebaseDatabase.getInstance()
 

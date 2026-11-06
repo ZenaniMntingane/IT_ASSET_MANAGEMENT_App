@@ -2,8 +2,10 @@ package com.example.it_asset_management_app
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -13,20 +15,23 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
+import java.util.Locale
 import kotlin.jvm.java
 
 class Dashboard : AppCompatActivity() {
     // =====================================================
-    // QUICK ACTIONS
+    // QUICK ACTIONS - ALL 8 MODULES
     // =====================================================
 
     private lateinit var btnAddAsset: View
+    private lateinit var btnAuditTrail: View
     private lateinit var btnTransfer: View
     private lateinit var btnExportReport: View
     private lateinit var btnAllocate: View
     private lateinit var btnAssetPersonnel: View
     private lateinit var btnMaintenance: View
-
+    private lateinit var btnAssetHistory: View
 
     // =====================================================
     // DASHBOARD TEXT
@@ -36,16 +41,15 @@ class Dashboard : AppCompatActivity() {
     private lateinit var txtReports: TextView
     private lateinit var txtTransfers: TextView
     private lateinit var txtAllocations: TextView
+
     private lateinit var tvUsername: TextView
     private lateinit var txtUserRole: TextView
-
 
     // =====================================================
     // PROFILE CARD
     // =====================================================
 
     private lateinit var profileCard: View
-
 
     // =====================================================
     // FIREBASE
@@ -55,10 +59,29 @@ class Dashboard : AppCompatActivity() {
     private lateinit var database: DatabaseReference
     private lateinit var firestore: FirebaseFirestore
 
+    // =====================================================
+    // VERIFIED ROLE
+    // =====================================================
+
+    private var currentUserRole: String = ""
+
+    private val allowedRoles = setOf(
+        "admin",
+        "it manager",
+        "it staff",
+        "asset personnel",
+        "staff"
+    )
 
     // =====================================================
-    // ON CREATE
+    // FIREBASE LISTENERS
     // =====================================================
+
+    private var assetsListener: ValueEventListener? = null
+    private var reportsListener: ValueEventListener? = null
+    private var allocationsListener: ValueEventListener? = null
+
+    private var transfersListener: ListenerRegistration? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,193 +89,89 @@ class Dashboard : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_dashboard)
-
         // =================================================
         // FIREBASE INITIALIZATION
         // =================================================
 
         auth = FirebaseAuth.getInstance()
 
-        database =
-            FirebaseDatabase.getInstance().reference
+        database = FirebaseDatabase.getInstance()
+            .reference
 
-        firestore =
-            FirebaseFirestore.getInstance()
-
+        firestore = FirebaseFirestore.getInstance()
 
         // =================================================
-        // FIND VIEWS
+        // FIND QUICK ACTION VIEWS
         // =================================================
 
-        btnAddAsset =
-            findViewById(R.id.btnAddAsset)
+        btnAddAsset = findViewById(R.id.cardAddAsset)
 
-        btnTransfer =
-            findViewById(R.id.btnTransfer)
+        btnAuditTrail = findViewById(R.id.cardAuditTrail)
 
-        btnExportReport =
-            findViewById(R.id.btnExportReport)
+        btnTransfer = findViewById(R.id.cardTransferAsset)
 
-        btnAllocate =
-            findViewById(R.id.btnAllocate)
+        btnExportReport = findViewById(R.id.cardReports)
 
-        btnAssetPersonnel =
-            findViewById(R.id.btnAssetPersonnel)
+        btnAllocate = findViewById(R.id.cardAllocateAsset)
 
-        btnMaintenance =
-            findViewById(R.id.btnMaintenance)
+        btnAssetPersonnel = findViewById(R.id.cardAssetPersonnel)
 
+        btnMaintenance = findViewById(R.id.cardMaintenance)
+
+        btnAssetHistory = findViewById(R.id.cardAssetHistory)
 
         // =================================================
-        // DASHBOARD TEXT
+        // DASHBOARD STATISTICS
         // =================================================
 
-        txtTotalAssets =
-            findViewById(R.id.txtTotalAssets)
+        txtTotalAssets = findViewById(R.id.txtTotalAssets)
 
-        txtReports =
-            findViewById(R.id.txtReports)
+        txtReports = findViewById(R.id.txtTotalReports)
 
-        txtTransfers =
-            findViewById(R.id.txtTransfers)
+        txtTransfers = findViewById(R.id.txtTotalTransfers)
 
-        txtAllocations =
-            findViewById(R.id.txtAllocations)
-
-        tvUsername =
-            findViewById(R.id.tvUsername)
-
-        txtUserRole =
-            findViewById(R.id.txtUserRole)
-
+        txtAllocations = findViewById(R.id.txtTotalAllocations)
 
         // =================================================
-        // PROFILE CARD
-        // =================================================
-
-        profileCard =
-            findViewById(R.id.profileCard)
-
-
-        // =================================================
-        // BUTTON NAVIGATION
-        // =================================================
-
-
-        // -------------------------------------------------
-        // ADD ASSET
-        // -------------------------------------------------
-
-        btnAddAsset.setOnClickListener {
-
-            val intent =
-                Intent(
-                    this,
-                    AddAsset::class.java
-                )
-
-            startActivity(intent)
-        }
-
-
-        // -------------------------------------------------
-        // TRANSFER ASSET
-        // -------------------------------------------------
-
-        btnTransfer.setOnClickListener {
-
-            val intent =
-                Intent(
-                    this,
-                    TransferAsset::class.java
-                )
-
-            startActivity(intent)
-        }
-
-
-        // -------------------------------------------------
-        // ALLOCATE ASSET
-        // -------------------------------------------------
-
-        btnAllocate.setOnClickListener {
-
-            val intent =
-                Intent(
-                    this,
-                    Allocate::class.java
-                )
-
-            startActivity(intent)
-        }
-
-
-        // -------------------------------------------------
-        // REPORTS
-        // -------------------------------------------------
-
-        btnExportReport.setOnClickListener {
-
-            val intent =
-                Intent(
-                    this,
-                    AssetReports::class.java
-                )
-
-            startActivity(intent)
-        }
-
-
-        // -------------------------------------------------
-        // ASSET PERSONNEL
-        // -------------------------------------------------
-
-        btnAssetPersonnel.setOnClickListener {
-
-            val intent =
-                Intent(
-                    this,
-                    AssetPersonnel::class.java
-                )
-
-            startActivity(intent)
-        }
-
-
-        // -------------------------------------------------
-        // MAINTENANCE
-        // -------------------------------------------------
-
-        btnMaintenance.setOnClickListener {
-
-            val intent =
-                Intent(
-                    this,
-                    MaintenanceAdd::class.java
-                )
-
-            startActivity(intent)
-        }
-
-
-        // -------------------------------------------------
         // PROFILE
-        // -------------------------------------------------
+        // =================================================
 
-        profileCard.setOnClickListener {
+        tvUsername = findViewById(R.id.txtUserName)
 
-            val intent =
-                Intent(
-                    this,
-                    Profile::class.java
-                )
+        txtUserRole = findViewById(R.id.txtUserRole)
 
-            startActivity(intent)
-        }
-
+        profileCard = findViewById(R.id.cardProfile)
 
         // =================================================
-        // LOAD FIREBASE DATA
+        // HIDE ALL QUICK ACTIONS UNTIL ROLE IS VERIFIED
+        // =================================================
+
+        applyRoleBasedAccess("")
+
+        // =================================================
+        // CHECK AUTHENTICATION
+        // =================================================
+
+        if (auth.currentUser == null) {
+
+            Toast.makeText(
+                this,
+                "Please sign in to access the dashboard.",
+                Toast.LENGTH_LONG
+            ).show()
+
+            finish()
+            return
+        }
+
+        // =================================================
+        // NAVIGATION
+        // =================================================
+
+        setupNavigation()
+
+        // =================================================
+        // LOAD USER PROFILE AND STATISTICS
         // =================================================
 
         loadUserProfile()
@@ -260,302 +179,540 @@ class Dashboard : AppCompatActivity() {
         loadDashboardData()
     }
 
+    // =====================================================
+    // QUICK ACTION NAVIGATION
+    // =====================================================
+
+    private fun setupNavigation() {
+
+        // -------------------------------------------------
+        // 1. ADD ASSET
+        // -------------------------------------------------
+
+        btnAddAsset.setOnClickListener {
+
+            if (!hasAccess("add asset")) {
+                return@setOnClickListener
+            }
+
+            startActivity(
+                Intent(this, AddAsset::class.java)
+            )
+        }
+
+        // -------------------------------------------------
+        // 2. TRANSFER ASSET
+        // -------------------------------------------------
+
+        btnTransfer.setOnClickListener {
+
+            if (!hasAccess("transfer asset")) {
+                return@setOnClickListener
+            }
+
+            startActivity(
+                Intent(this, TransferAsset::class.java)
+            )
+        }
+
+        // -------------------------------------------------
+        // 3. ALLOCATE ASSET
+        // -------------------------------------------------
+
+        btnAllocate.setOnClickListener {
+
+            if (!hasAccess("allocate asset")) {
+                return@setOnClickListener
+            }
+
+            startActivity(
+                Intent(this, Allocate::class.java)
+            )
+        }
+
+        // -------------------------------------------------
+        // 4. ASSET PERSONNEL
+        // -------------------------------------------------
+
+        btnAssetPersonnel.setOnClickListener {
+
+            if (!hasAccess("asset personnel management")) {
+                return@setOnClickListener
+            }
+
+            startActivity(
+                Intent(this, AssetPersonnel::class.java)
+            )
+        }
+
+        // -------------------------------------------------
+        // 5. MAINTENANCE
+        // -------------------------------------------------
+
+        btnMaintenance.setOnClickListener {
+
+            if (!hasAccess("maintenance")) {
+                return@setOnClickListener
+            }
+
+            startActivity(
+                Intent(this, Maintenance::class.java)
+            )
+        }
+
+        // -------------------------------------------------
+        // 6. REPORTS
+        // -------------------------------------------------
+
+        btnExportReport.setOnClickListener {
+
+            if (!hasAccess("reports")) {
+                return@setOnClickListener
+            }
+
+            startActivity(
+                Intent(this, AssetReports::class.java)
+            )
+        }
+
+        // -------------------------------------------------
+        // 7. AUDIT TRAIL
+        // -------------------------------------------------
+
+        btnAuditTrail.setOnClickListener {
+
+            if (!hasAccess("audit trail")) {
+                return@setOnClickListener
+            }
+
+            startActivity(
+                Intent(this, AuditTrail::class.java)
+            )
+        }
+
+        // -------------------------------------------------
+        // 8. ASSET HISTORY
+        // -------------------------------------------------
+
+        btnAssetHistory.setOnClickListener {
+
+            if (!hasAccess("asset history")) {
+                return@setOnClickListener
+            }
+
+            startActivity(
+                Intent(this, AssetHistory::class.java)
+            )
+        }
+
+        // -------------------------------------------------
+        // PROFILE
+        // -------------------------------------------------
+
+        profileCard.setOnClickListener {
+
+            startActivity(
+                Intent(this, Profile::class.java)
+            )
+        }
+    }
 
     // =====================================================
     // LOAD USER PROFILE
+    // FIRESTORE: users/{UID}
     // =====================================================
 
     private fun loadUserProfile() {
 
-        val currentUser =
-            auth.currentUser
-
-
-        // -------------------------------------------------
-        // NO LOGGED-IN USER
-        // -------------------------------------------------
+        val currentUser = auth.currentUser
 
         if (currentUser == null) {
 
-            tvUsername.text =
-                "User"
+            tvUsername.text = "User"
+            txtUserRole.text = "Not signed in"
 
-            txtUserRole.text =
-                "Staff"
+            applyRoleBasedAccess("")
 
-            applyRoleBasedAccess(
-                "Staff"
-            )
-
+            finish()
             return
         }
 
+        val uid = currentUser.uid
 
-        val uid =
-            currentUser.uid
+        Log.d(
+            "Dashboard",
+            "Firebase Authentication UID: $uid"
+        )
 
-
-        // =================================================
-        // GET USER FROM FIRESTORE
-        // =================================================
-
-        firestore
-            .collection("users")
+        // The Firestore document ID is the Firebase UID.
+        firestore.collection("users")
             .document(uid)
             .get()
             .addOnSuccessListener { document ->
 
+                if (!document.exists()) {
 
-                // -------------------------------------------------
-                // DOCUMENT EXISTS
-                // -------------------------------------------------
+                    tvUsername.text = "User"
+                    txtUserRole.text = "Profile not found"
 
-                if (document.exists()) {
+                    applyRoleBasedAccess("")
 
-
-                    // ---------------------------------------------
-                    // USER NAME
-                    // ---------------------------------------------
-
-                    val name =
-                        document.getString("name")
-                            ?: "User"
-
-
-                    tvUsername.text =
-                        name
-
-
-                    // ---------------------------------------------
-                    // USER ROLE
-                    // ---------------------------------------------
-
-                    val role =
-                        document.getString("role")
-                            ?: "Staff"
-
-
-                    txtUserRole.text =
-                        role
-
-
-                    // ---------------------------------------------
-                    // APPLY ROLE
-                    // ---------------------------------------------
-
-                    applyRoleBasedAccess(
-                        role
+                    Log.e(
+                        "Dashboard",
+                        "No profile found for UID: $uid"
                     )
 
+                    Toast.makeText(
+                        this,
+                        "User profile not found.",
+                        Toast.LENGTH_LONG
+                    ).show()
 
-                } else {
-
-
-                    // ---------------------------------------------
-                    // USER DOCUMENT DOES NOT EXIST
-                    // ---------------------------------------------
-
-                    tvUsername.text =
-                        "User"
-
-                    txtUserRole.text =
-                        "Staff"
-
-                    applyRoleBasedAccess(
-                        "Staff"
-                    )
+                    return@addOnSuccessListener
                 }
-            }
-            .addOnFailureListener {
 
+                // -----------------------------------------
+                // USER NAME
+                // -----------------------------------------
 
-                // -------------------------------------------------
-                // FIRESTORE ERROR
-                // -------------------------------------------------
+                val name = document.getString("name")
+                    ?: document.getString("fullName")
+                    ?: "User"
 
-                tvUsername.text =
-                    "User"
+                // -----------------------------------------
+                // USER ROLE
+                // -----------------------------------------
 
-                txtUserRole.text =
-                    "Staff"
+                val role = document.getString("role")
+                    .orEmpty()
+                    .trim()
 
-                applyRoleBasedAccess(
-                    "Staff"
+                val normalizedRole = role.lowercase(Locale.ROOT)
+
+                tvUsername.text = name
+
+                txtUserRole.text = role.ifBlank {
+                    "Unknown role"
+                }
+
+                Log.d(
+                    "Dashboard",
+                    "User: $name"
                 )
+
+                Log.d(
+                    "Dashboard",
+                    "Role: $role"
+                )
+
+                // -----------------------------------------
+                // VALIDATE ROLE
+                // -----------------------------------------
+
+                if (normalizedRole !in allowedRoles) {
+
+                    currentUserRole = ""
+
+                    applyRoleBasedAccess("")
+
+                    Toast.makeText(
+                        this,
+                        "Your account has an invalid role.",
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                    return@addOnSuccessListener
+                }
+
+                // Apply permissions.
+                applyRoleBasedAccess(role)
+            }
+            .addOnFailureListener { error ->
+
+                Log.e(
+                    "Dashboard",
+                    "Failed to retrieve Firestore user profile",
+                    error
+                )
+
+                tvUsername.text = "User"
+
+                txtUserRole.text = "Unable to verify role"
+
+                currentUserRole = ""
+
+                applyRoleBasedAccess("")
+
+                Toast.makeText(
+                    this,
+                    "Unable to verify your permissions.",
+                    Toast.LENGTH_LONG
+                ).show()
             }
     }
 
-
     // =====================================================
-    // ROLE-BASED DASHBOARD ACCESS
+    // APPLY ROLE-BASED ACCESS CONTROL
     // =====================================================
 
-    private fun applyRoleBasedAccess(
-        role: String
-    ) {
-
+    private fun applyRoleBasedAccess(role: String) {
 
         // =================================================
-        // HIDE EVERYTHING FIRST
+        // HIDE ALL 8 QUICK ACTIONS FIRST
         // =================================================
 
-        btnAddAsset.visibility =
-            View.GONE
+        btnAddAsset.visibility = View.GONE
 
-        btnTransfer.visibility =
-            View.GONE
+        btnTransfer.visibility = View.GONE
 
-        btnExportReport.visibility =
-            View.GONE
+        btnAllocate.visibility = View.GONE
 
-        btnAllocate.visibility =
-            View.GONE
+        btnAssetPersonnel.visibility = View.GONE
 
-        btnAssetPersonnel.visibility =
-            View.GONE
+        btnMaintenance.visibility = View.GONE
 
-        btnMaintenance.visibility =
-            View.GONE
+        btnExportReport.visibility = View.GONE
 
+        btnAuditTrail.visibility = View.GONE
+
+        btnAssetHistory.visibility = View.GONE
 
         // =================================================
         // NORMALIZE ROLE
         // =================================================
 
-        val userRole =
-            role
-                .trim()
-                .lowercase()
+        val userRole = role.trim()
+            .lowercase(Locale.ROOT)
 
+        currentUserRole = userRole
 
         // =================================================
-        // ADMIN
+        // ADMIN - ALL 8 MODULES
         // =================================================
 
-        if (userRole == "admin") {
+        when (userRole) {
 
-            btnAddAsset.visibility =
-                View.VISIBLE
+            "admin" -> {
 
-            btnTransfer.visibility =
-                View.VISIBLE
+                showQuickActions(
+                    addAsset = true,
+                    transfer = true,
+                    allocate = true,
+                    assetPersonnel = true,
+                    maintenance = true,
+                    reports = true,
+                    auditTrail = true,
+                    assetHistory = true
+                )
+            }
 
-            btnExportReport.visibility =
-                View.VISIBLE
+            // =============================================
+            // IT MANAGER
+            // ALL EXCEPT AUDIT TRAIL AND ASSET HISTORY
+            // =============================================
 
-            btnAllocate.visibility =
-                View.VISIBLE
+            "it manager" -> {
 
-            btnAssetPersonnel.visibility =
-                View.VISIBLE
+                showQuickActions(
+                    addAsset = true,
+                    transfer = true,
+                    allocate = true,
+                    assetPersonnel = true,
+                    maintenance = true,
+                    reports = true,
+                    auditTrail = false,
+                    assetHistory = false
+                )
+            }
 
-            btnMaintenance.visibility =
-                View.VISIBLE
+            // =============================================
+            // IT STAFF
+            // =============================================
 
-            return
+            "it staff" -> {
+
+                showQuickActions(
+                    addAsset = true,
+                    transfer = true,
+                    allocate = false,
+                    assetPersonnel = false,
+                    maintenance = true,
+                    reports = true,
+                    auditTrail = false,
+                    assetHistory = true
+                )
+            }
+
+            // =============================================
+            // ASSET PERSONNEL
+            // =============================================
+
+            "asset personnel" -> {
+
+                showQuickActions(
+                    addAsset = true,
+                    transfer = true,
+                    allocate = true,
+                    assetPersonnel = false,
+                    maintenance = false,
+                    reports = false,
+                    auditTrail = true,
+                    assetHistory = true
+                )
+            }
+
+            // =============================================
+            // STAFF
+            // TRANSFER ASSET ONLY
+            // =============================================
+
+            "staff" -> {
+
+                showQuickActions(
+                    addAsset = false,
+                    transfer = true,
+                    allocate = false,
+                    assetPersonnel = false,
+                    maintenance = false,
+                    reports = false,
+                    auditTrail = false,
+                    assetHistory = false
+                )
+            }
+
+            // =============================================
+            // UNKNOWN ROLE
+            // NO QUICK ACTION ACCESS
+            // =============================================
+
+            else -> {
+
+                currentUserRole = ""
+
+                Log.e(
+                    "Dashboard",
+                    "No dashboard permissions for: $role"
+                )
+            }
         }
 
-
-        // =================================================
-        // IT MANAGER
-        // =================================================
-
-        if (userRole == "it manager") {
-
-            btnAddAsset.visibility =
-                View.VISIBLE
-
-            btnTransfer.visibility =
-                View.VISIBLE
-
-            btnExportReport.visibility =
-                View.VISIBLE
-
-            btnAllocate.visibility =
-                View.VISIBLE
-
-            btnAssetPersonnel.visibility =
-                View.VISIBLE
-
-            btnMaintenance.visibility =
-                View.VISIBLE
-
-            return
-        }
-
-
-        // =================================================
-        // ASSET PERSONNEL
-        // =================================================
-
-        if (userRole == "asset personnel") {
-
-            btnAddAsset.visibility =
-                View.VISIBLE
-
-            btnTransfer.visibility =
-                View.VISIBLE
-
-            btnExportReport.visibility =
-                View.VISIBLE
-
-            btnAllocate.visibility =
-                View.VISIBLE
-
-            btnMaintenance.visibility =
-                View.VISIBLE
-
-            return
-        }
-
-
-        // =================================================
-        // IT STAFF
-        // =================================================
-
-        if (userRole == "it staff") {
-
-            btnTransfer.visibility =
-                View.VISIBLE
-
-            btnExportReport.visibility =
-                View.VISIBLE
-
-            btnAllocate.visibility =
-                View.VISIBLE
-
-            btnMaintenance.visibility =
-                View.VISIBLE
-
-            return
-        }
-
-
-        // =================================================
-        // STAFF
-        // =================================================
-
-        // =================================================
-
-
-        if (userRole == "staff") {
-            btnTransfer.visibility = View.VISIBLE
-            btnAllocate.visibility = View.GONE
-            btnMaintenance.visibility = View.GONE
-            return
-        }
-
-        // =================================================
-        // UNKNOWN ROLE
-        // =================================================
-
-        // If the role is unknown, keep all management
-        // actions hidden for safety.
+        Log.d(
+            "Dashboard",
+            "RBAC permissions applied: $userRole"
+        )
     }
 
+    // =====================================================
+    // SHOW/HIDE QUICK ACTIONS
+    // =====================================================
+
+    private fun showQuickActions(
+        addAsset: Boolean,
+        transfer: Boolean,
+        allocate: Boolean,
+        assetPersonnel: Boolean,
+        maintenance: Boolean,
+        reports: Boolean,
+        auditTrail: Boolean,
+        assetHistory: Boolean
+    ) {
+
+        btnAddAsset.visibility =
+            if (addAsset) View.VISIBLE else View.GONE
+
+        btnTransfer.visibility =
+            if (transfer) View.VISIBLE else View.GONE
+
+        btnAllocate.visibility =
+            if (allocate) View.VISIBLE else View.GONE
+
+        btnAssetPersonnel.visibility =
+            if (assetPersonnel) View.VISIBLE else View.GONE
+
+        btnMaintenance.visibility =
+            if (maintenance) View.VISIBLE else View.GONE
+
+        btnExportReport.visibility =
+            if (reports) View.VISIBLE else View.GONE
+
+        btnAuditTrail.visibility =
+            if (auditTrail) View.VISIBLE else View.GONE
+
+        btnAssetHistory.visibility =
+            if (assetHistory) View.VISIBLE else View.GONE
+    }
 
     // =====================================================
-    // LOAD DASHBOARD DATA
+    // CHECK USER PERMISSION BEFORE NAVIGATION
+    // =====================================================
+
+    private fun hasAccess(feature: String): Boolean {
+
+        // Require a valid signed-in account.
+        if (auth.currentUser == null || currentUserRole.isBlank()) {
+
+            Toast.makeText(
+                this,
+                "Your account permissions have not been verified.",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            return false
+        }
+
+        val permitted = when (currentUserRole) {
+
+            // Admin can access every module.
+            "admin" -> true
+
+            // IT Manager.
+            "it manager" -> feature in setOf(
+                "add asset",
+                "transfer asset",
+                "allocate asset",
+                "asset personnel management",
+                "maintenance",
+                "reports"
+            )
+
+            // IT Staff.
+            "it staff" -> feature in setOf(
+                "add asset",
+                "transfer asset",
+                "maintenance",
+                "reports",
+                "asset history"
+            )
+
+            // Asset Personnel.
+            "asset personnel" -> feature in setOf(
+                "add asset",
+                "transfer asset",
+                "allocate asset",
+                "audit trail",
+                "asset history"
+            )
+
+            // Staff.
+            "staff" -> feature == "transfer asset"
+
+            else -> false
+        }
+
+        if (!permitted) {
+
+            Toast.makeText(
+                this,
+                "Access denied: $feature",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+        return permitted
+    }
+
+    // =====================================================
+    // LOAD DASHBOARD STATISTICS
     // =====================================================
 
     private fun loadDashboardData() {
@@ -569,151 +726,156 @@ class Dashboard : AppCompatActivity() {
         loadAllocations()
     }
 
-
     // =====================================================
     // TOTAL ASSETS
+    // REALTIME DATABASE: assets
     // =====================================================
 
     private fun loadTotalAssets() {
 
-        database
-            .child("assets")
-            .addValueEventListener(
+        assetsListener = object : ValueEventListener {
 
-                object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
 
-                    override fun onDataChange(
-                        snapshot: DataSnapshot
-                    ) {
+                txtTotalAssets.text =
+                    snapshot.childrenCount.toString()
+            }
 
-                        val count =
-                            snapshot.childrenCount
+            override fun onCancelled(error: DatabaseError) {
 
+                Log.e(
+                    "Dashboard",
+                    "Failed to retrieve asset count",
+                    error.toException()
+                )
 
-                        txtTotalAssets.text =
-                            count.toString()
-                    }
+                txtTotalAssets.text = "0"
+            }
+        }
 
-
-                    override fun onCancelled(
-                        error: DatabaseError
-                    ) {
-
-                        txtTotalAssets.text =
-                            "0"
-                    }
-                }
-            )
+        database.child("assets")
+            .addValueEventListener(assetsListener!!)
     }
-
 
     // =====================================================
     // REPORT EXPORTS
+    // REALTIME DATABASE: reportExports
     // =====================================================
 
     private fun loadReports() {
 
-        database
-            .child("reportExports")
-            .addValueEventListener(
+        reportsListener = object : ValueEventListener {
 
-                object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
 
-                    override fun onDataChange(
-                        snapshot: DataSnapshot
-                    ) {
+                txtReports.text =
+                    snapshot.childrenCount.toString()
+            }
 
-                        val exportCount =
-                            snapshot.childrenCount
+            override fun onCancelled(error: DatabaseError) {
 
+                Log.e(
+                    "Dashboard",
+                    "Failed to retrieve report count",
+                    error.toException()
+                )
 
-                        txtReports.text =
-                            exportCount.toString()
-                    }
+                txtReports.text = "0"
+            }
+        }
 
-
-                    override fun onCancelled(
-                        error: DatabaseError
-                    ) {
-
-                        txtReports.text =
-                            "0"
-                    }
-                }
-            )
+        database.child("reportExports")
+            .addValueEventListener(reportsListener!!)
     }
-
 
     // =====================================================
     // TRANSFERS
+    // FIRESTORE: transfers
     // =====================================================
 
     private fun loadTransfers() {
 
-        database
-            .child("transfers")
-            .addValueEventListener(
+        transfersListener = firestore
+            .collection("transfers")
+            .addSnapshotListener { snapshot, error ->
 
-                object : ValueEventListener {
+                if (error != null) {
 
-                    override fun onDataChange(
-                        snapshot: DataSnapshot
-                    ) {
+                    Log.e(
+                        "Dashboard",
+                        "Failed to retrieve transfer count",
+                        error
+                    )
 
-                        val count =
-                            snapshot.childrenCount
+                    txtTransfers.text = "—"
 
-
-                        txtTransfers.text =
-                            count.toString()
-                    }
-
-
-                    override fun onCancelled(
-                        error: DatabaseError
-                    ) {
-
-                        txtTransfers.text =
-                            "0"
-                    }
+                    return@addSnapshotListener
                 }
-            )
-    }
 
+                if (snapshot != null) {
+
+                    txtTransfers.text =
+                        snapshot.size().toString()
+                }
+            }
+    }
 
     // =====================================================
     // ALLOCATIONS
+    // REALTIME DATABASE: allocations
     // =====================================================
 
     private fun loadAllocations() {
 
-        database
-            .child("allocations")
-            .addValueEventListener(
+        allocationsListener = object : ValueEventListener {
 
-                object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
 
-                    override fun onDataChange(
-                        snapshot: DataSnapshot
-                    ) {
+                txtAllocations.text =
+                    snapshot.childrenCount.toString()
+            }
 
-                        val count =
-                            snapshot.childrenCount
+            override fun onCancelled(error: DatabaseError) {
 
+                Log.e(
+                    "Dashboard",
+                    "Failed to retrieve allocation count",
+                    error.toException()
+                )
 
-                        txtAllocations.text =
-                            count.toString()
-                    }
+                txtAllocations.text = "0"
+            }
+        }
 
+        database.child("allocations")
+            .addValueEventListener(allocationsListener!!)
+    }
 
-                    override fun onCancelled(
-                        error: DatabaseError
-                    ) {
+    // =====================================================
+    // REMOVE FIREBASE LISTENERS
+    // =====================================================
 
-                        txtAllocations.text =
-                            "0"
-                    }
-                }
-            )
+    override fun onDestroy() {
+
+        assetsListener?.let {
+            database.child("assets").removeEventListener(it)
+        }
+
+        reportsListener?.let {
+            database.child("reportExports").removeEventListener(it)
+        }
+
+        allocationsListener?.let {
+            database.child("allocations").removeEventListener(it)
+        }
+
+        transfersListener?.remove()
+
+        assetsListener = null
+        reportsListener = null
+        allocationsListener = null
+        transfersListener = null
+
+        super.onDestroy()
     }
 }

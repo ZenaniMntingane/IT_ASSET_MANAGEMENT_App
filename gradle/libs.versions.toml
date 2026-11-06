@@ -15,6 +15,7 @@ firebaseDatabase = "21.0.0"
 firebaseFirestore = "25.1.1"
 materialVersion = "1.12.0"
 firebaseStorageKtx = "21.0.2"
+identity = "202411.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -31,6 +32,7 @@ firebase-database = { group = "com.google.firebase", name = "firebase-database",
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 material-v1120 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
 firebase-storage-ktx = { group = "com.google.firebase", name = "firebase-storage-ktx", version.ref = "firebaseStorageKtx" }
+identity = { group = "com.android.identity", name = "identity", version.ref = "identity" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
